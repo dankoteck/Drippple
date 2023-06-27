@@ -66,6 +66,12 @@
 
     --ring: 217.2 32.6% 17.5%;
   }
+
+  ::selection {
+    background: #ea4c89;
+    color: #fff;
+    color: rgba(255, 255, 255, 0.85);
+  }
 }
 
 @layer base {
@@ -78,14 +84,12 @@
 }
 
 @layer utilities {
-  @variants responsive {
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    .no-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }

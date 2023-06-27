@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
-import AuthProvider from "./components/AuthProvider";
+import AuthProvider from "~/components/AuthProvider";
 import "./globals.css";
+import Footer from "~/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,12 +12,9 @@ export const metadata = {
 
 export default function RootLayout({
   children,
-  listShots,
 }: {
   children: React.ReactNode;
-  listShots: React.ReactNode;
 }) {
-  console.log(listShots)
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -24,6 +22,8 @@ export default function RootLayout({
           {children}
           {/* {listShots} */}
         </AuthProvider>
+
+        <Footer />
       </body>
     </html>
   );

@@ -1,8 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import { categories, trendingSearches } from "../constants";
 import { Input } from "./ui/input";
+import { useRouter } from "next/navigation";
 
 export default function Banner() {
+  const router = useRouter();
+
+  const onSoftNavigation = (url: string) => {};
+
   return (
     <div className="h-[650px] md:h-[560px] flex-col flex relative items-center gap-8 max-w-full overflow-hidden px-5 py-[50px] bg-black">
       {/* Categories */}
@@ -15,6 +22,8 @@ export default function Banner() {
             >
               <Link
                 href={category.href}
+                // role="button"
+                // onClick={() => onSoftNavigation(category.href)}
                 className=" text-center px-4 py-2.5 inline-block mr-4 lg:px-5 lg:py-4 text-white transition duration-300 bg-black rounded-[50px] w-fit bg-opacity-50 hover:bg-white hover:bg-opacity-100 hover:text-black"
               >
                 {category.text}
