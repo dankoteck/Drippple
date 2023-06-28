@@ -1,14 +1,26 @@
-import FilterView from "~/components/FilterView";
-import { Button } from "~/components/ui/button";
-import { getAuthSession } from "~/utils/auth";
 import { BsFilter } from "@react-icons/all-files/bs/BsFilter";
+import FilterView from "~/components/FilterView";
+import LoadMore from "~/components/LoadMore";
+import Projects from "~/components/Projects";
+import { Button } from "~/components/ui/button";
+import { getProjects } from "~/lib/actions";
+import { getAuthSession } from "~/utils/auth";
 
-export default async function Home() {
+type SearchParams = {
+  category?: string;
+};
+
+type Props = {
+  searchParams: SearchParams;
+};
+
+export default async function Home({ searchParams }: Props) {
   const session = await getAuthSession();
+  const items = await getProjects(searchParams.category);
 
   return (
-    <div className="px-10 mx-auto max-w-screen-2xl">
-      <div className="flex items-center justify-between py-8">
+    <div className="px-10 py-8 mx-auto max-w-screen-2xl">
+      <div className="flex items-center justify-between mb-8">
         <FilterView />
         <Button variant="outline">
           <BsFilter className="w-6 h-6 mr-2" />
@@ -17,6 +29,9 @@ export default async function Home() {
       </div>
 
       {/* List Projects */}
+      <Projects data={items} />
+
+      <LoadMore session={session} />
     </div>
   );
 }

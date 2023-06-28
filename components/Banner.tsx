@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useParams } from "~/app/hooks/useParams";
+import { useParams } from "~/hooks/useParams";
 import { categories, trendingSearches } from "../constants";
 import { Input } from "./ui/input";
 
