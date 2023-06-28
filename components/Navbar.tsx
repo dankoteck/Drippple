@@ -1,19 +1,28 @@
 "use client";
 
+import { AiOutlineSearch } from "@react-icons/all-files/ai/AiOutlineSearch";
 import { motion, useCycle } from "framer-motion";
+import { Session } from "next-auth";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "../constants";
 import { MenuToggle } from "./MenuToggle";
+import UserContextMenu from "./UserContextMenu";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
-function Navbar() {
+function Navbar({ session }: { session: Session | null }) {
   const [open, cycleOpen] = useCycle(false, true);
+
+  const onUserLogin = () => {
+    signIn("google");
+  };
 
   return (
     <div className="relative">
-      <div className="flex items-center justify-between h-24 px-6 border-b border-b-slate-200 sm:px-10">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between h-24 px-6 sm:px-10">
+        <div className="flex items-center flex-1 gap-4">
           <MenuToggle open={open} toggle={cycleOpen} />
 
           {/* Logo */}
@@ -28,7 +37,7 @@ function Navbar() {
           </Link>
 
           {/* Nav items */}
-          <ul className="items-center hidden gap-8 ml-4 lg:flex">
+          <ul className="items-center hidden gap-4 ml-4 2xl:gap-8 lg:flex">
             {navLinks.map((link) =>
               link.key.includes("Log in") ? null : (
                 <li
@@ -47,17 +56,35 @@ function Navbar() {
         </div>
 
         {/* Login/Signup */}
-        <div className="flex items-center gap-4">
-          <div className="items-center hidden gap-4 lg:flex">
-            <Button variant="link" onClick={() => {}}>
-              Log in
-            </Button>
-
-            <span className="hidden mr-4 text-sm xl:block">&bull;</span>
+        {session?.user ? (
+          <div className="flex items-center justify-end gap-6 xl:flex-1">
+            {/*  */}
+            <div className="hidden w-full max-w-[280px] 2xl:max-w-xs xl:block">
+              <Input
+                placeholder="Search..."
+                className="z-10 pl-12 pr-6 py-6 bg-slate-100 border-0 rounded-[50px]"
+              />
+            </div>
+            {/*  */}
+            <AiOutlineSearch className="block cursor-pointer w-7 h-7 xl:hidden" />
+            <Link className="hidden xl:block" href={"/uploads/new"}>
+              <Button size="lg">Share Work</Button>
+            </Link>
+            <UserContextMenu user={session.user} />
           </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <div className="items-center hidden gap-4 lg:flex">
+              <Button variant="link" onClick={onUserLogin}>
+                Log in
+              </Button>
 
-          <Button size="lg">Sign up</Button>
-        </div>
+              <span className="hidden mr-4 text-sm xl:block">&bull;</span>
+            </div>
+
+            <Button size="lg">Sign up</Button>
+          </div>
+        )}
       </div>
 
       {/* Mobile Nav */}

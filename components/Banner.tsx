@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ import { categories, trendingSearches } from "../constants";
 import { Input } from "./ui/input";
 
 export default function Banner() {
+  const { data } = useSession();
   const router = useRouter();
   const param = useParams("category");
   const initCategoryIdx = categories.findIndex((item) => item.key === param);
@@ -34,8 +36,12 @@ export default function Banner() {
     return <h1>Not found dude</h1>;
   }
 
+  if (data?.user) {
+    return null;
+  }
+
   return (
-    <div className="h-[650px] md:h-[560px] flex-col flex relative items-center gap-8 max-w-full overflow-hidden px-5 py-[50px] bg-black">
+    <div className="border-t border-t-slate-200 h-[650px] md:h-[560px] flex-col flex relative items-center gap-8 max-w-full overflow-hidden px-5 py-[50px] bg-black">
       {/* Categories */}
       <div className="relative z-10 order-[0] w-[calc(100%+30px)] pt-4 -ml-4 -mr-4 mt-0 mb-5 overflow-x-auto overflow-y-hidden text-center border-0 no-scrollbar">
         <ul className="overflow-x-auto overflow-y-hidden px-0.5 no-scrollbar whitespace-nowrap scroll-smooth">

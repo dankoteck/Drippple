@@ -10,15 +10,9 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.dribbble.com",
+        hostname: "*dribbble.com",
         port: "",
-        pathname: "/users/**",
-      },
-      {
-        protocol: "https",
-        hostname: "cdn.dribbble.com",
-        port: "",
-        pathname: "/userupload/**",
+        pathname: "/**",
       },
     ],
   },

@@ -114,4 +114,9 @@
       rgba(0, 0, 0, 0.4) 91.17%
     );
   }
+
+  .swiper-arrow {
+    @apply absolute top-0 z-10 flex items-center justify-center w-10 py-3 opacity-100 xl:opacity-0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, white 50%);
+  }
 }

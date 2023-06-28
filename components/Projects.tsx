@@ -29,6 +29,8 @@ export default function Projects({
             ) : (
               <Image
                 fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="object-cover w-full h-full rounded-2xl"
                 src={item.url}
                 alt={item.title}
@@ -55,7 +57,8 @@ export default function Projects({
             <div className="flex items-center gap-2">
               <div className="relative w-6 rounded-full aspect-square">
                 <Image
-                  fill
+                  width={24}
+                  height={24}
                   className="object-cover rounded-full"
                   src={item.author.avatar}
                   alt={item.author.name}
