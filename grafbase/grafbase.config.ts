@@ -38,5 +38,5 @@ export default config({
   auth: {
     providers: [jwt],
     rules: (rules) => rules.private(),
-  },
+  }
 });
