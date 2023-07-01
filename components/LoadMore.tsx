@@ -3,16 +3,37 @@
 import { Session } from "next-auth";
 import { Button } from "./ui/button";
 import { signIn } from "next-auth/react";
+import { usePathname, useRouter } from "next/navigation";
 
-export default function LoadMore({ session }: { session: Session | null }) {
+type Props = {
+  session: Session | null;
+  endCursor: string;
+};
+
+export default function LoadMore({ session, endCursor }: Props) {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const onSignin = () => {
     signIn("google");
+  };
+
+  const onNavigation = () => {
+    const currentParams = new URLSearchParams(window.location.search);
+
+    currentParams.delete("endCursor");
+    currentParams.set("endCursor", endCursor);
+
+    const newSearchParams = currentParams.toString();
+    const newPathname = `${pathname}?${newSearchParams}`;
+
+    router.push(newPathname);
   };
 
   return (
     <div className="flex items-center justify-center gap-8 mt-10">
       {session ? (
-        <Button onClick={onSignin} className="bg-pink-500">
+        <Button onClick={onNavigation} className="bg-pink-500">
           Load more Shots
         </Button>
       ) : (

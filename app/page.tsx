@@ -4,11 +4,13 @@ import FilterView from "~/components/FilterView";
 import LoadMore from "~/components/LoadMore";
 import Projects from "~/components/Projects";
 import { Button } from "~/components/ui/button";
-import { getProjects } from "~/lib/actions";
+import { getProjects } from "~/libs/actions";
+import { AllProjects } from "~/types";
 import { getAuthSession } from "~/utils/auth";
 
 type SearchParams = {
-  category?: string;
+  category?: string | null;
+  endCursor?: string | null;
 };
 
 type Props = {
@@ -17,7 +19,12 @@ type Props = {
 
 export default async function Home({ searchParams }: Props) {
   const session = await getAuthSession();
-  const items = await getProjects(searchParams.category);
+  const items2 = (await getProjects(
+    searchParams.category,
+    searchParams.endCursor
+  )) as AllProjects;
+  const items: never[] = [];
+  console.log({ items2 });
 
   return (
     <div className="px-10 py-8 mx-auto max-w-screen-2xl">
@@ -33,7 +40,10 @@ export default async function Home({ searchParams }: Props) {
       {/* List Projects */}
       <Projects data={items} />
 
-      <LoadMore session={session} />
+      <LoadMore
+        session={session}
+        endCursor={items2?.allProjects?.pageInfo?.endCursor}
+      />
     </div>
   );
 }

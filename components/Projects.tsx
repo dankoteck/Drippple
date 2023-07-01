@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getProjects } from "~/lib/actions";
+import { getProjects } from "~/libs/actions";
 import { Button } from "./ui/button";
 import { BiSolidFolderPlus } from "@react-icons/all-files/bi/BiSolidFolderPlus";
 import { AiFillHeart } from "@react-icons/all-files/ai/AiFillHeart";
@@ -8,7 +8,8 @@ import { AiFillEye } from "@react-icons/all-files/ai/AiFillEye";
 export default function Projects({
   data,
 }: {
-  data: Awaited<ReturnType<typeof getProjects>>;
+  // data: Awaited<ReturnType<typeof getProjects>>;
+  data: any[]
 }) {
   return (
     <ul className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
